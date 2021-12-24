@@ -1,0 +1,117 @@
+import React from 'react';
+import { Navbar, Button } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
+import { Nav, NavDropdown } from 'react-bootstrap';
+// import {
+//   Nav,
+//   NavLink,
+//   Bars,
+//   NavMenu,
+//   NavBtn,
+//   NavBtnLink
+// } from './Navbar';
+// import LogoName from '../../images/apple-seeklogo.com.svg'
+// import Modal from "../../pages/Login/Loginmodal.jsx";
+import  { useState } from "react";
+// import LogoName from '../../assets/apple-seeklogo.com.svg'
+import { FaMagento } from 'react-icons/fa';
+import { ModalLogin } from '../Login/ModalLogin';
+// import { ModalRegister } from '../Register/ModalRegis';
+import { ModalRegister } from '../Register/ModalRegis';
+
+
+
+
+// import { ModalLogin } from '../Login/ModalLogin';
+
+const logOut = () => {
+  localStorage.removeItem("access_token")
+  window.location = window.location.origin + "/login"
+}
+
+
+
+
+const Navbarindex = () => {
+
+   const [showModal, setShowModal] = useState(false);
+   const [showModalRes, setShowModalRes] = useState(false);
+
+   const openModal = () => {
+    setShowModal(prev => !prev);
+   }
+
+   const openModalres = () => {
+    setShowModalRes(prev => !prev);
+   }
+
+   const renderRegisterLoginOrLogout = () => {
+    if (localStorage.getItem("access_token")) {
+        return (
+
+          <Button  onClick={logOut} Style="line-height:0.5;" variant="outline-primary" >
+            <Nav.Link  >Logut</Nav.Link>
+          </Button>
+            
+        )
+    } else {
+        return (
+                    <Nav >
+                        <Button  onClick={openModal} Style="line-height:0.5;" variant="outline-primary" >
+                          <Nav.Link  >Login</Nav.Link>
+                        </Button>
+                        <Button  onClick={openModalres} variant="outline-primary" Style="line-height:0.5;margin-left:10px" >
+                          <Nav.Link >Sign up </Nav.Link>
+                        </Button>
+                      </Nav>
+        )
+    }
+  }
+    
+  return (
+
+
+        <>
+            <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" Style='background-color:#101522' >
+                  {/* <Navbar collapseOnSelect expand="lg" Style='background:#101522'> */}
+              <Container>
+              {/* <Navbar.Brand href="/" >Home</Navbar.Brand> */}
+              <Navbar.Brand href="/" Style="font-size:2rem" ><FaMagento /></Navbar.Brand>
+              <Navbar.Toggle aria-controls="responsive-navbar-nav" Style="border-color: rgb(255,102,203)" navbar-light="true"/>
+                  <Navbar.Collapse id="responsive-navbar-nav" >
+                    <Nav className="me-auto" >
+                      <Nav.Link href="/report"   >Report</Nav.Link>
+                      <Nav.Link href="/pricing" >Pricing</Nav.Link>
+                      <NavDropdown  title={<span className=" my-auto">Dropdown</span>} id="collasible-nav-dropdown" >
+                        <NavDropdown.Item href="#action/3.1"  >Action</NavDropdown.Item>
+                        <NavDropdown.Item href="#action/3.2"  >Another action</NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item href="#action/3.3"  >Something</NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item href="#action/3.4"  >Separated link</NavDropdown.Item>
+                      </NavDropdown>
+                    </Nav>
+                    <Nav >
+                      <Button  onClick={openModal} Style="line-height:0.5;" variant="outline-primary" >
+                        <Nav.Link  >Login</Nav.Link>
+                      </Button>
+                      {/* <Nav.Link href="#deetss" >Sign up</Nav.Link> */}
+                      <Button  onClick={openModalres} variant="outline-primary" Style="line-height:0.5;margin-left:10px" >
+                        <Nav.Link >Sign up </Nav.Link>
+                      </Button>
+                      {/* <Nav.Link eventKey={2} href="#memes" Style='color:#fff'>
+                        Register
+                      </Nav.Link> */}
+                    </Nav>
+                  </Navbar.Collapse>
+              </Container>
+            </Navbar>
+              <ModalLogin showModal={showModal} setShowModal={setShowModal} />
+             <ModalRegister showModalRes={showModalRes} setShowModalRes={setShowModalRes} />
+
+      </>
+     );
+}
+
+
+export default Navbarindex;
